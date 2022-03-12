@@ -4,13 +4,20 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var indexRouter = require('./app_server/routes/index'); // Module 2 update
+var usersRouter = require('./app_server/routes/users'); // Module 2 update
+var travelRouter = require('./app_server/routes/travel'); // Module 2 update
+const { hasSubscribers } = require('diagnostics_channel'); // not sure if this needs to be deleted???
+const { handlebars } = require('hbs');
 
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'app_server', 'views')); // Module 2 update
+
+// register handlebars partials (https://www.npmjs.com/package/hbs)
+hbs.registerPartials(path.join(__dirname, 'app_server', 'views/partials'));
+
 app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
@@ -21,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/travel', travelRouter); // Module 2 update
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
