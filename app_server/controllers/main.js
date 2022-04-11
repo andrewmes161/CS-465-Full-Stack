@@ -1,5 +1,6 @@
 const index = (req, res) => { // when a request comes in assign it to
-    res.render('index', {title: 'Travlr Getaways'});
+    pageTitle = process.env.npm_package_description + ' - Main';
+    res.render('index', {title: pageTitle});
 };
 
 module.exports = {
