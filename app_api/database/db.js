@@ -1,12 +1,15 @@
 const mongoose = require('mongoose');
 const host = process.env.DB_HOST || '127.0.0.1';
-const dbURI = 'mongodb://${host}/travlr';
+const dbURI = `mongodb://${host}/travlr`;
+const readline = require('readline');
+
+mongoose.set('useUnifiedTopology', true);
 
 const connect = () => {
     setTimeout(() => mongoose.connect(dbURI, {
         useNewUrlParser: true,
-        useCreateIndex: true,
-        useUnifiedTopology: true
+        useCreateIndex: true
+        //useUnifiedTopology: true
     }), 1000);
 }
 
@@ -19,6 +22,16 @@ mongoose.connection.on('error', err => {
 mongoose.connection.on('disconnected', () => {
     console.log('Mongoose disconnected');
 })
+
+if (process.platform === 'win32') {
+    const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
+    rl.on('SIGINT', () => {
+        process.emit("SIGINT");
+    });
+}
 
 const gracefulShutdown =  (msg, callback) => {
     mongoose.connection.close( () => {
@@ -49,4 +62,4 @@ process.on('SIGTERM', () => {
 connect();
 
 //bring in the mongoose schema
-require('./travlr');
+require('./models/travlr');

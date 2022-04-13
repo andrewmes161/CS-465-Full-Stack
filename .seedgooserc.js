@@ -1,7 +1,7 @@
 // .seedgooserc.js <--- This is taken straight from https://www.npmjs.com/package/seedgoose
 module.exports = {
-    modelBaseDirectory: 'app_server/models', // model directory name
-    models: ['*.js','!db.js'], // model matcher
+    modelBaseDirectory: 'app_api/database/models', // model directory name
+    models: ["*.js","!db.js"], // model matcher
     data: 'data', // data directory name
     db: 'mongodb://localhost:27017/travlr' // db connection url
   };
