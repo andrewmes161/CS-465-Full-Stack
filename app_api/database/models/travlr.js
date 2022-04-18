@@ -10,7 +10,7 @@ const tripSchema = new Schema({
     resort: { type: String, required: true},
     perPerson: { type: String, required: true}, // easier to store as strings, and then convert to an decimal...
     image: { type: String, required: true},
-    description: { type: String, required: true}
+    description: { type: String, required: true} // not sure why this isn't showing up in the code
 });
 
 // mongoose.model('trips', tripSchema);
